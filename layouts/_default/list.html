@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="section">
+  <div class="section-header">
+    <span class="section-title">All Reports</span>
+    <span class="section-link">{{ len .Pages }} total</span>
+  </div>
+
+  {{ if .Pages }}
+  <div class="reports-grid">
+    {{ range .Pages }}
+    {{ partial "report-card.html" . }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="empty-state">
+    <span class="t-prompt">$</span> <span class="t-comment"># No reports published yet. Check back soon.</span>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

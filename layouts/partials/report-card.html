@@ -1,0 +1,19 @@
+{{ $sev := .Params.severity | default "medium" }}
+<a href="{{ .RelPermalink }}" class="report-card severity-{{ $sev }}">
+  <span class="report-index">{{ printf "%03d" .Weight }}</span>
+  <div class="report-body">
+    <div class="report-title">{{ .Title }}</div>
+    <div class="report-meta">
+      <span class="report-date">{{ .Date.Format "2006-01-02" }}</span>
+      <span class="report-family">{{ .Params.malware_family }}</span>
+    </div>
+    <div class="report-tags">
+      {{ range .Params.tags }}
+      <span class="report-tag {{ . | lower }}">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
+  <div class="report-severity sev-{{ $sev }}">
+    <span class="sev-dot"></span>{{ $sev | title }}
+  </div>
+</a>

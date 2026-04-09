@@ -1,0 +1,103 @@
+{{ define "main" }}
+{{ $sev := .Params.severity | default "medium" }}
+
+<article class="report-page section">
+
+  <!-- Report Header -->
+  <div class="report-header">
+    <a href="/reports/" class="back-link">← All Reports</a>
+
+    <div class="report-page-meta">
+      <div class="report-severity sev-{{ $sev }}" style="margin-bottom:12px">
+        <span class="sev-dot"></span>{{ $sev | title }} Severity
+      </div>
+      <h1 class="report-page-title">{{ .Title }}</h1>
+
+      <div class="report-info-strip">
+        <div class="info-item">
+          <span class="info-label">Date</span>
+          <span class="info-val">{{ .Date.Format "January 02, 2006" }}</span>
+        </div>
+        {{ with .Params.malware_family }}
+        <div class="info-item">
+          <span class="info-label">Family</span>
+          <span class="info-val">{{ . }}</span>
+        </div>
+        {{ end }}
+        {{ with .Params.platform }}
+        <div class="info-item">
+          <span class="info-label">Platform</span>
+          <span class="info-val">{{ . }}</span>
+        </div>
+        {{ end }}
+        {{ with .Params.sha256 }}
+        <div class="info-item">
+          <span class="info-label">SHA-256</span>
+          <span class="info-val hash">{{ . }}</span>
+        </div>
+        {{ end }}
+      </div>
+
+      <div class="report-tags" style="margin-top:16px">
+        {{ range .Params.tags }}
+        <span class="report-tag {{ . | lower }}">{{ . }}</span>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+
+  <!-- IOC Summary Box (if provided) -->
+  {{ with .Params.iocs }}
+  <div class="ioc-box">
+    <div class="ioc-box-title">
+      <span class="t-prompt">$</span> Indicators of Compromise (Defanged)
+    </div>
+    <div class="ioc-grid">
+      {{ range . }}
+      <div class="ioc-row">
+        <span class="ioc-type">{{ .type }}</span>
+        <code class="ioc-val">{{ .value }}</code>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  <!-- MITRE ATT&CK Techniques -->
+  {{ with .Params.mitre }}
+  <div class="mitre-box">
+    <div class="mitre-title">MITRE ATT&amp;CK Techniques</div>
+    <div class="mitre-grid">
+      {{ range . }}
+      <a href="https://attack.mitre.org/techniques/{{ .id | replace "." "/" }}/" target="_blank" class="mitre-tag">
+        <span class="mitre-id">{{ .id }}</span>
+        <span class="mitre-name">{{ .name }}</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  <!-- Report Body (Markdown content) -->
+  <div class="report-content">
+    {{ .Content }}
+  </div>
+
+  <!-- Navigation between reports -->
+  <div class="report-nav">
+    {{ with .PrevInSection }}
+    <a href="{{ .RelPermalink }}" class="nav-link nav-prev">
+      <span class="nav-dir">← Previous</span>
+      <span class="nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+    {{ with .NextInSection }}
+    <a href="{{ .RelPermalink }}" class="nav-link nav-next">
+      <span class="nav-dir">Next →</span>
+      <span class="nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+  </div>
+
+</article>
+{{ end }}

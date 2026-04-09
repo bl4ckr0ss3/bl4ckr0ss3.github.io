@@ -1,0 +1,186 @@
+{{ define "main" }}
+
+<!-- ─── HERO ──────────────────────────────── -->
+<header class="hero">
+  <p class="hero-label">Malware Analysis · Threat Intelligence</p>
+  <h1 class="hero-title">
+    Reverse engineering<br>
+    <span class="accent">malware,</span><br>
+    <span class="line2">one sample at a time.</span>
+  </h1>
+  <p class="hero-bio">
+    Independent malware analyst &amp; computer engineering student. I dissect malicious software, document TTPs, and publish detailed technical reports. Currently studying <strong>Threat Intelligence</strong> and working toward a deeper understanding of adversary tradecraft.
+  </p>
+  <div class="hero-tags">
+    <span class="tag green">Static Analysis</span>
+    <span class="tag green">Dynamic Analysis</span>
+    <span class="tag amber">Threat Intel</span>
+    <span class="tag">MITRE ATT&amp;CK</span>
+    <span class="tag red">Malware RE</span>
+    <span class="tag">YARA Rules</span>
+  </div>
+  <div class="hero-actions">
+    <a href="/reports/" class="btn btn-primary">→ View Reports</a>
+    <a href="#about" class="btn btn-ghost">About me</a>
+  </div>
+
+  <div class="stat-strip">
+    {{ $reports := where .Site.RegularPages "Section" "reports" }}
+    <div class="stat">
+      <span class="stat-num">{{ len $reports }}</span>
+      <span class="stat-label">Reports Published</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{{ len ($.Site.Taxonomies.malware_families) }}</span>
+      <span class="stat-label">Malware Families</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{{ len ($.Site.Taxonomies.tags) }}</span>
+      <span class="stat-label">Tags Covered</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Curiosity</span>
+    </div>
+  </div>
+</header>
+
+<!-- ─── LATEST REPORTS ───────────────────── -->
+<section class="section" id="reports">
+  <div class="section-header">
+    <span class="section-title">Latest Reports</span>
+    <a href="/reports/" class="section-link">View all →</a>
+  </div>
+
+  {{ $reports := where .Site.RegularPages "Section" "reports" }}
+  {{ if $reports }}
+  <div class="reports-grid">
+    {{ range first 5 $reports }}
+    {{ partial "report-card.html" . }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="empty-state">
+    <span class="t-prompt">$</span> <span class="t-comment"># No reports yet, first one coming soon.</span>
+  </div>
+  {{ end }}
+</section>
+
+<!-- ─── LATEST BLOG POSTS ─────────────────── -->
+<section class="section" style="padding-top:0" id="blog">
+  <div class="section-header">
+    <span class="section-title">Latest Posts</span>
+    <a href="/blog/" class="section-link">View all →</a>
+  </div>
+
+  {{ $posts := where .Site.RegularPages "Section" "blog" }}
+  {{ if $posts }}
+  <div class="blog-list">
+    {{ range first 3 $posts }}
+    <a href="{{ .RelPermalink }}" class="blog-card">
+      <div class="blog-card-left">
+        <span class="blog-date">{{ .Date.Format "2006-01-02" }}</span>
+        <div class="blog-title">{{ .Title }}</div>
+        {{ with .Params.description }}<div class="blog-desc">{{ . }}</div>{{ end }}
+        <div class="blog-tags">
+          {{ range .Params.tags }}<span class="blog-tag">{{ . }}</span>{{ end }}
+        </div>
+      </div>
+      <span class="blog-arrow">→</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="empty-state">
+    <span class="t-prompt">$</span> <span class="t-comment"># No posts yet, first one coming soon.</span>
+  </div>
+  {{ end }}
+</section>
+
+<!-- ─── TERMINAL BLOCK ────────────────────── -->
+<section class="section" style="padding-top:0">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+      <span class="terminal-title">blackrose@lab:~/samples$</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">$</span> <span class="t-cmd">file sample.exe</span></div>
+      <div class="t-output">sample.exe: PE32 executable (GUI) Intel 80386, for MS Windows, UPX compressed</div>
+      <div class="t-blank"></div>
+      <div><span class="t-prompt">$</span> <span class="t-cmd">strings sample.exe | grep -i "http"</span></div>
+      <div class="t-output t-val">http://185.220.101[.]47/gate.php</div>
+      <div class="t-blank"></div>
+      <div><span class="t-prompt">$</span> <span class="t-cmd">python3 extract_config.py sample.exe</span></div>
+      <div class="t-output"><span class="t-key">C2</span>: <span class="t-val">185.220.101[.]47:80</span></div>
+      <div class="t-output"><span class="t-key">BuildID</span>: <span class="t-val">RDL_2024_prod_v5</span></div>
+      <div class="t-output"><span class="t-key">Steals</span>: <span class="t-val">browsers, wallets, steam, discord, telegram</span></div>
+      <div class="t-output"><span class="t-key">Mutex</span>: <span class="t-val">RDL_MUTEX_5Xk2pQ</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-prompt">$</span> <span class="t-comment"># Defanged IOCs — do not connect to live infrastructure</span></div>
+      <div><span class="t-prompt">$</span> <span class="t-cmd">_<span class="cursor" style="width:7px;height:13px;display:inline-block;background:var(--accent);animation:blink 1.1s step-end infinite;vertical-align:middle;"></span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOOLS / STACK ──────────────────────── -->
+<section class="section" id="tools">
+  <div class="section-header">
+    <span class="section-title">Analysis Toolkit</span>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-category">Static</div><div class="tool-name">PE-bear</div><div class="tool-desc">PE header inspector and editor</div></div>
+    <div class="tool-card"><div class="tool-category">Static</div><div class="tool-name">IDA</div><div class="tool-desc">Hex-Rays Interactive disassembler &amp; decompiler</div></div>
+    <div class="tool-card"><div class="tool-category">Static</div><div class="tool-name">DIE</div><div class="tool-desc">Detect-It-Easy — packer/compiler detection</div></div>
+    <div class="tool-card"><div class="tool-category">Dynamic</div><div class="tool-name">x64dbg</div><div class="tool-desc">Open-source debugger for Windows binaries</div></div>
+    <div class="tool-card"><div class="tool-category">Dynamic</div><div class="tool-name">Procmon</div><div class="tool-desc">Process monitor for filesystem &amp; registry</div></div>
+    <div class="tool-card"><div class="tool-category">Network</div><div class="tool-name">Wireshark</div><div class="tool-desc">Packet capture and protocol analysis</div></div>
+    <div class="tool-card"><div class="tool-category">OSINT</div><div class="tool-name">VirusTotal</div><div class="tool-desc">Multi-AV scanning and hash reputation</div></div>
+    <div class="tool-card"><div class="tool-category">Sandbox</div><div class="tool-name">Any.run</div><div class="tool-desc">Interactive malware sandbox analysis</div></div>
+    <div class="tool-card"><div class="tool-category">Rules</div><div class="tool-name">YARA</div><div class="tool-desc">Pattern matching for malware detection</div></div>
+    <div class="tool-card"><div class="tool-category">Sandbox</div><div class="tool-name">VMWare</div><div class="tool-desc">Virtual isolated environment by Broadcom</div></div>
+    <div class="tool-card"><div class="tool-category">.NET</div><div class="tool-name">dnSpy</div><div class="tool-desc">Static &amp; Dynamic analysis for .NET Framework</div></div>
+    <div class="tool-card"><div class="tool-category">Dynamic</div><div class="tool-name">Procmon</div><div class="tool-desc">Sysinternal Suite tool for process analysis</div></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─────────────────────────────── -->
+<section class="section" id="about">
+  <div class="section-header">
+    <span class="section-title">About</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-block">
+      <div class="about-block-title">Background</div>
+      <p>I'm a <strong>computer engineering student</strong> with a strong focus on malware analysis and threat intelligence. Based in Turkey, I'm actively developing hands-on skills through self-directed research.</p>
+      <p>This site is where I publish my analysis work and detailed breakdowns of real malware samples, including behavioral analysis, IOC extraction, and MITRE ATT&amp;CK mapping.</p>
+      <p>My goal is to <strong>learn in public</strong>, document my progress, and contribute useful intelligence back to the community.</p>
+    </div>
+    <div class="about-block">
+      <div class="about-block-title">Learning Path</div>
+      <ul class="cert-list">
+        <li>Malware Analysis &amp; Reverse Engineering — Self-study</li>
+        <li>MITRE ATT&amp;CK Framework — Applied usage</li>
+        <li>Threat Intelligence fundamentals<span class="wip">OK</span></li>
+        <li>Flare-Learning-Hub <span class="wip">Ongoing</span></li>
+        <li>eLearnSecurity eMalware Analysis <span class="wip">Planned</span></li>
+      </ul>
+    </div>
+    <div class="about-block" style="border-top:1px solid var(--border)">
+      <div class="about-block-title">Focus Areas</div>
+      <p><strong>Commodity malware</strong> — Stealers, RATs, loaders, and ransomware that affect real users every day.</p>
+      <p><strong>Threat actor TTPs</strong> — Understanding how adversaries operate beyond just the sample itself.</p>
+    </div>
+    <div class="about-block" style="border-top:1px solid var(--border)">
+      <div class="about-block-title">Contact</div>
+      <p>Have a sample to share, a collaboration idea, or just want to talk malware? Reach out.</p><br/>
+      <p>
+        <strong>Email:</strong> <a href="mailto:0xblackrose@proton.me">0xblackrose@proton.me</a><br/>
+        <strong>Twitter:</strong> <a href="https://x.com/LxlxIxlxlxL">@LxlxIxlxlxL</a><br/>
+        <strong>Discord:</strong> <a href="https://discord.com/users/490868409198837760">@0xbl4ck</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{{ end }}

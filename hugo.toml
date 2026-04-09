@@ -1,0 +1,24 @@
+baseURL = "https://bl4ckr0ss3.github.io/"
+languageCode = "en-us"
+title = "blackrose.lab"
+# theme = ""   # using layouts directly (no separate theme folder needed)
+
+[params]
+  author        = "Ege Yildiz"
+  description   = "Malware Analysis & Threat Intelligence"
+  handle        = "@LxlxIxlxlxL"
+  github        = "https://github.com/bl4ckr0ss3"
+  twitter       = "https://twitter.com/LxlxIxlxlxL"
+  email         = "0xblackrose@proton.me"
+  location      = "Turkey"
+
+[taxonomies]
+  tag            = "tags"
+  category       = "categories"
+  malware_family = "malware_families"
+
+[markup.goldmark.renderer]
+  unsafe = true   # allows raw HTML inside markdown (for callout boxes etc.)
+
+[markup.highlight]
+  style = "monokai"

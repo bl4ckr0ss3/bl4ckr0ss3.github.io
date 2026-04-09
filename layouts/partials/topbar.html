@@ -1,0 +1,12 @@
+<nav class="topbar">
+  <a href="/" class="topbar-logo">
+    <span class="prompt">~/</span>black<span class="prompt">.lab</span><span class="cursor"></span>
+  </a>
+  <ul class="topbar-nav">
+    <li><a href="/reports/" {{ if (hasPrefix .RelPermalink "/reports") }}class="active"{{ end }}>Reports</a></li>
+    <li><a href="/blog/" {{ if (hasPrefix .RelPermalink "/blog") }}class="active"{{ end }}>Blog</a></li>
+    <li><a href="/#tools">Tools</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="mailto:{{ .Site.Params.email }}">Contact</a></li>
+  </ul>
+</nav>
