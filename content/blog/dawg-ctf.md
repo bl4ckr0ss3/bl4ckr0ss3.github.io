@@ -1,7 +1,7 @@
 ---
 title: "DawgCTF - Data Needs Splitting Write-up"
 date: 2026-04-17T20:17:16+03:00
-draft: true
+draft: false
 description: "I loved this question and wanted to make a write-up, from queryig TXT Records to Reverse Engineering .jar file"
 
 # Optional tags — freeform, anything goes
