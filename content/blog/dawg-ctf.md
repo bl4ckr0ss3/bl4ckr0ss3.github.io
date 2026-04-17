@@ -174,3 +174,13 @@ Let's execute it and see what we got here:
 
 BOOM!, we've finally achieved the flag **DawgCTF{J@v@_My_B3l0v3d}**.
 
+## Summary
+
+This challenge combined multiple techniques:
+- **DNS reconnaissance** to extract encoded data
+- **Archive unpacking** (Base64 and ZIP handling)
+- **Java reflection** and class loading manipulation
+- **Cryptanalysis** to reverse the XOR cipher
+
+A great blend of CTF challenges in one problem!
+
