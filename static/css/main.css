@@ -659,6 +659,7 @@ footer a:hover { color: var(--accent); }
   line-height: 1.85;
   color: var(--text-dim);
   max-width: 720px;
+  overflow-x: hidden;
 }
 
 .report-content h2 {
@@ -705,6 +706,7 @@ footer a:hover { color: var(--accent); }
   padding: 20px 24px;
   overflow-x: auto;
   margin: 24px 0;
+  max-width: 100%;
 }
 
 .report-content pre code {
@@ -737,6 +739,8 @@ footer a:hover { color: var(--accent); }
   border-collapse: collapse;
   margin: 24px 0;
   font-size: 13px;
+  overflow-x: auto;
+  display: block;
 }
 
 .report-content th {
@@ -946,5 +950,10 @@ footer a:hover { color: var(--accent); }
   max-width: 600px;
 }
 
-.blog-content { margin-top: 0; padding-top: 0; border-top: none; }
-.blog-content img {max-width: 100%; height: auto; display: block;}
+.blog-content { margin-top: 0; padding-top: 0; border-top: none; overflow-x: hidden; }
+.blog-content img { max-width: 100%; height: auto; display: block; }
+.blog-content > * { max-width: 100%; overflow-x: auto; }
+
+table td {
+    word-break: break-all;
+}
